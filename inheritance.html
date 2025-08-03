@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inheritance - C# OOP</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            line-height: 1.6;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+        }
+        h2 {
+            color: #34495e;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #2c3e50;
+            margin-top: 25px;
+        }
+        .code-block {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            border: 1px solid #3c3c3c;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .code-block::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: linear-gradient(90deg, #ff5f56, #ffbd2e, #27ca3f);
+            border-radius: 8px 8px 0 0;
+        }
+        .code-block::after {
+            content: "●●●";
+            position: absolute;
+            top: 8px;
+            left: 12px;
+            color: #1e1e1e;
+            font-size: 8px;
+            letter-spacing: 2px;
+        }
+        .code-content {
+            margin-top: 30px;
+            white-space: pre-wrap;
+        }
+        .keyword {
+            color: #569cd6;
+            font-weight: 500;
+        }
+        .string {
+            color: #ce9178;
+        }
+        .comment {
+            color: #6a9955;
+            font-style: italic;
+        }
+        .type {
+            color: #4ec9b0;
+        }
+        .concept-box {
+            background-color: #e8f4fd;
+            border: 1px solid #bee3f8;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .concept-title {
+            color: #2b6cb0;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .navigation {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ecf0f1;
+        }
+        .nav-link {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: 2px solid #3498db;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        .nav-link:hover {
+            background-color: #3498db;
+            color: white;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .comparison-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .hierarchy-box {
+            background-color: #f8f9fa;
+            border: 2px solid #6c757d;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            text-align: center;
+        }
+        .arrow {
+            font-size: 24px;
+            color: #28a745;
+            margin: 10px 0;
+        }
+        .casting-demo {
+            background-color: #e3f2fd;
+            border: 1px solid #90caf9;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .casting-title {
+            color: #1565c0;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .warning-box {
+            background-color: #fff3e0;
+            border: 1px solid #ffcc02;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            color: #e65100;
+        }
+        .inheritance-level {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .level-1 { background-color: #e8f5e8; color: #2e7d32; }
+        .level-2 { background-color: #e3f2fd; color: #1565c0; }
+        .level-3 { background-color: #fce4ec; color: #c2185b; }
+        .output-box {
+            background-color: #0d1117;
+            color: #f0f6fc;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            border-left: 4px solid #28a745;
+        }
+        .output-title {
+            color: #28a745;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Inheritance in C#</h1>
+        <p style="text-align: center; color: #7f8c8d; margin-bottom: 30px;">
+            Understanding class inheritance, polymorphism, and method overriding in C#
+        </p>
+
+        <h2>📋 Code Analysis</h2>
+
+        <h3>Animal Abstract Class (Animal.cs)</h3>
+        <div class="code-block">
+            <div class="code-content"><span class="keyword">namespace</span> <span class="type">Inheritance</span>;
+
+<span class="comment">// Abstract class - cannot create objects directly</span>
+<span class="keyword">public abstract class</span> <span class="type">Animal</span>
+{
+    <span class="comment">// Abstract method - must be implemented by derived classes</span>
+    <span class="keyword">public abstract void</span> Eat();
+
+    <span class="comment">// Virtual method - can be overridden by derived classes</span>
+    <span class="keyword">protected virtual void</span> Move()
+    {
+        <span class="type">Console</span>.WriteLine(<span class="string">"Animal"</span>);
+    }
+
+    <span class="comment">// Regular method - inherited as-is</span>
+    <span class="keyword">public void</span> dosomething()
+    {
+        <span class="comment">// Implementation here</span>
+    }
+}</div>
+        </div>
+
+        <h3>Eagle Sealed Class (Eagle.cs)</h3>
+        <div class="code-block">
+            <div class="code-content"><span class="keyword">namespace</span> <span class="type">Inheritance</span>
+{
+    <span class="comment">// Sealed class - cannot be inherited from</span>
+    <span class="keyword">public sealed class</span> <span class="type">Eagle</span> : <span class="type">Animal</span>
+    {
+        <span class="comment">// Override virtual method from base class</span>
+        <span class="keyword">protected override void</span> Move()
+        {
+            <span class="keyword">base</span>.Move();  <span class="comment">// Call parent implementation</span>
+            <span class="type">Console</span>.WriteLine(<span class="string">"Eagle"</span>);
+        }
+
+        <span class="comment">// Public method that uses protected method</span>
+        <span class="keyword">public void</span> Fly()
+        {
+            Move();
+        }
+
+        <span class="comment">// Sealed override - cannot be overridden further</span>
+        <span class="keyword">public sealed override void</span> Eat()
+        {
+            <span class="type">Console</span>.WriteLine(<span class="string">"eat"</span>);
+        }
+    }
+}</div>
+        </div>
+
+        <h3>Falcon Class (Falcon.cs)</h3>
+        <div class="code-block">
+            <div class="code-content"><span class="keyword">namespace</span> <span class="type">Inheritance</span>
+{
+    <span class="keyword">public class</span> <span class="type">Falcon</span> : <span class="type">Animal</span>
+    {
+        <span class="comment">// Must implement abstract method</span>
+        <span class="keyword">public override void</span> Eat()
+        {
+            <span class="keyword">throw new</span> <span class="type">NotImplementedException</span>();
+        }
+    }
+}</div>
+        </div>
+
+        <h3>Base and Sub Classes (BaseClass.cs)</h3>
+        <div class="code-block">
+            <div class="code-content"><span class="keyword">namespace</span> <span class="type">Inheritance</span>
+{
+    <span class="keyword">public class</span> <span class="type">BaseClass</span>
+    {
+        <span class="keyword">public</span> <span class="type">int</span> x;
+        
+        <span class="comment">// Base class constructor</span>
+        <span class="keyword">public</span> BaseClass(<span class="type">int</span> value)
+        {
+            x = value;
+        }
+    }
+
+    <span class="keyword">public class</span> <span class="type">SubClass</span> : <span class="type">BaseClass</span>
+    {
+        <span class="comment">// Derived class constructor calling base constructor</span>
+        <span class="keyword">public</span> SubClass(<span class="type">int</span> scValue) : <span class="keyword">base</span>(scValue) { } 
+    }
+}</div>
+        </div>
+
+        <h3>Program Class (Program.cs)</h3>
+        <div class="code-block">
+            <div class="code-content"><span class="keyword">namespace</span> <span class="type">Inheritance</span>
+{
+    <span class="keyword">internal class</span> <span class="type">Program</span>
+    {
+        <span class="keyword">static void</span> Main(<span class="type">string</span>[] args)
+        {
+            <span class="keyword">var</span> eagle = <span class="keyword">new</span> Eagle();
+
+            <span class="comment">// Upcasting - implicit conversion to base type</span>
+            <span class="type">Animal</span> animal = eagle;
+            
+            <span class="comment">// Downcasting - explicit conversion to derived type</span>
+            <span class="keyword">var</span> eagle2 = (<span class="type">Eagle</span>) animal;
+            eagle2.Fly();
+
+            <span class="type">Console</span>.WriteLine(<span class="string">"Hello, World!"</span>);
+        }
+    }
+}</div>
+        </div>
+
+        <h2>📤 Expected Output</h2>
+        <div class="output-box">
+            <div class="output-title">Program Output:</div>
+            Animal<br>
+            Eagle<br>
+            Hello, World!
+        </div>
+
+        <h2>🏗️ Inheritance Hierarchy</h2>
+        <div class="hierarchy-box">
+            <div class="inheritance-level level-1">Animal (Abstract Base Class)</div>
+            <div class="arrow">↓</div>
+            <div style="display: flex; justify-content: space-around;">
+                <div>
+                    <div class="inheritance-level level-2">Eagle (Sealed Class)</div>
+                    <div style="font-size: 12px; margin-top: 5px;">✗ Cannot inherit further</div>
+                </div>
+                <div>
+                    <div class="inheritance-level level-2">Falcon (Regular Class)</div>
+                    <div style="font-size: 12px; margin-top: 5px;">✓ Can be inherited</div>
+                </div>
+            </div>
+        </div>
+
+        <h2>🔑 Key Concepts Explained</h2>
+
+        <div class="concept-box">
+            <div class="concept-title">1. Abstract Classes</div>
+            <p><strong>Definition:</strong> Classes that cannot be instantiated and may contain abstract methods.</p>
+            <ul>
+                <li><strong>Cannot instantiate:</strong> <code>new Animal()</code> ❌ Compilation error</li>
+                <li><strong>Abstract methods:</strong> Must be implemented by derived classes</li>
+                <li><strong>Virtual methods:</strong> Can be overridden (optional)</li>
+                <li><strong>Regular methods:</strong> Inherited as-is by derived classes</li>
+                <li><strong>Purpose:</strong> Provide common base functionality and enforce contracts</li>
+            </ul>
+        </div>
+
+        <div class="concept-box">
+            <div class="concept-title">2. Method Overriding</div>
+            <p><strong>Mechanism:</strong> Derived classes can provide specific implementations of base class methods.</p>
+            <ul>
+                <li><strong>virtual:</strong> Base class method can be overridden</li>
+                <li><strong>override:</strong> Derived class provides new implementation</li>
+                <li><strong>sealed override:</strong> Cannot be overridden further</li>
+                <li><strong>base.Method():</strong> Call parent class implementation</li>
+                <li><strong>Runtime polymorphism:</strong> Correct method called based on actual object type</li>
+            </ul>
+        </div>
+
+        <div class="concept-box">
+            <div class="concept-title">3. Sealed Classes and Methods</div>
+            <p><strong>Purpose:</strong> Prevent further inheritance or method overriding.</p>
+            <ul>
+                <li><strong>Sealed class:</strong> Cannot be used as base class (like Eagle)</li>
+                <li><strong>Sealed method:</strong> Override cannot be overridden further</li>
+                <li><strong>Performance:</strong> Compiler optimizations possible</li>
+                <li><strong>Security:</strong> Prevent malicious inheritance</li>
+                <li><strong>Examples:</strong> string, int, DateTime are sealed classes</li>
+            </ul>
+        </div>
+
+        <div class="concept-box">
+            <div class="concept-title">4. Constructor Chaining</div>
+            <p><strong>Mechanism:</strong> Derived class constructors must call base class constructors.</p>
+            <ul>
+                <li><strong>Explicit call:</strong> <code>: base(parameters)</code></li>
+                <li><strong>Implicit call:</strong> Parameterless base constructor called automatically</li>
+                <li><strong>Order:</strong> Base constructor runs before derived constructor</li>
+                <li><strong>Required:</strong> If base class has no parameterless constructor</li>
+            </ul>
+        </div>
+
+        <h2>🔄 Type Casting in Inheritance</h2>
+        
+        <div class="casting-demo">
+            <div class="casting-title">Upcasting (Implicit - Always Safe)</div>
+            <div class="code-block">
+                <div class="code-content"><span class="type">Eagle</span> eagle = <span class="keyword">new</span> Eagle();
+<span class="type">Animal</span> animal = eagle;  <span class="comment">// Implicit conversion - always safe</span></div>
+            </div>
+            <p>✅ <strong>Always safe:</strong> Derived type can always be treated as base type</p>
+        </div>
+
+        <div class="casting-demo">
+            <div class="casting-title">Downcasting (Explicit - Potentially Unsafe)</div>
+            <div class="code-block">
+                <div class="code-content"><span class="type">Animal</span> animal = <span class="keyword">new</span> Eagle();
+<span class="type">Eagle</span> eagle = (<span class="type">Eagle</span>)animal;  <span class="comment">// Explicit cast required</span>
+
+<span class="comment">// Safe casting with 'as' operator</span>
+<span class="type">Eagle</span> eagle2 = animal <span class="keyword">as</span> Eagle;  <span class="comment">// Returns null if cast fails</span>
+
+<span class="comment">// Type checking with 'is' operator</span>
+<span class="keyword">if</span> (animal <span class="keyword">is</span> Eagle eagleInstance)
+{
+    eagleInstance.Fly();  <span class="comment">// Safe to use</span>
+}</div>
+            </div>
+            <p>⚠️ <strong>Potentially unsafe:</strong> Can throw InvalidCastException if object is not of expected type</p>
+        </div>
+
+        <h2>📊 Method Types Comparison</h2>
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Method Type</th>
+                    <th>Can Override?</th>
+                    <th>Must Implement?</th>
+                    <th>Has Implementation?</th>
+                    <th>Usage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Regular Method</strong></td>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>Yes</td>
+                    <td>Inherited as-is</td>
+                </tr>
+                <tr>
+                    <td><strong>Virtual Method</strong></td>
+                    <td>Yes (optional)</td>
+                    <td>No</td>
+                    <td>Yes</td>
+                    <td>Can be customized</td>
+                </tr>
+                <tr>
+                    <td><strong>Abstract Method</strong></td>
+                    <td>Must override</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                    <td>Contract enforcement</td>
+                </tr>
+                <tr>
+                    <td><strong>Override Method</strong></td>
+                    <td>Yes (unless sealed)</td>
+                    <td>N/A</td>
+                    <td>Yes</td>
+                    <td>Custom implementation</td>
+                </tr>
+                <tr>
+                    <td><strong>Sealed Override</strong></td>
+                    <td>No</td>
+                    <td>N/A</td>
+                    <td>Yes</td>
+                    <td>Final implementation</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🔄 Polymorphism in Action</h2>
+        <div class="code-block">
+            <div class="code-content"><span class="comment">// Polymorphism example</span>
+<span class="keyword">static void</span> FeedAnimal(<span class="type">Animal</span> animal)
+{
+    animal.Eat();  <span class="comment">// Calls correct implementation based on actual type</span>
+}
+
+<span class="keyword">static void</span> Main()
+{
+    <span class="type">Animal</span>[] animals = {
+        <span class="keyword">new</span> Eagle(),
+        <span class="keyword">new</span> Falcon()
+    };
+    
+    <span class="keyword">foreach</span> (<span class="type">Animal</span> animal <span class="keyword">in</span> animals)
+    {
+        FeedAnimal(animal);  <span class="comment">// Different behavior for each type</span>
+        
+        <span class="comment">// Type-specific behavior</span>
+        <span class="keyword">if</span> (animal <span class="keyword">is</span> Eagle eagle)
+        {
+            eagle.Fly();  <span class="comment">// Only available for Eagle</span>
+        }
+    }
+}</div>
+        </div>
+
+        <h2>⚠️ Common Pitfalls</h2>
+        <div class="warning-box">
+            <h4>Inheritance Anti-patterns to Avoid:</h4>
+            <ul>
+                <li><strong>Deep inheritance chains:</strong> Keep hierarchy shallow (max 3-4 levels)</li>
+                <li><strong>God classes:</strong> Avoid classes that do too many things</li>
+                <li><strong>Inappropriate inheritance:</strong> Use composition over inheritance when possible</li>
+                <li><strong>Breaking Liskov Substitution:</strong> Derived classes should be substitutable for base classes</li>
+                <li><strong>Forgetting base() calls:</strong> Remember to call base constructors</li>
+                <li><strong>Unsafe casting:</strong> Always check types before downcasting</li>
+            </ul>
+        </div>
+
+        <h2>🔧 Best Practices</h2>
+        <div class="highlight">
+            <h4>Inheritance Design Guidelines:</h4>
+            <ul>
+                <li><strong>Favor composition:</strong> Use inheritance for "is-a" relationships only</li>
+                <li><strong>Abstract base classes:</strong> Use for common behavior and contracts</li>
+                <li><strong>Protected members:</strong> Use for derived class access, not public</li>
+                <li><strong>Virtual methods:</strong> Make methods virtual only when overriding is intended</li>
+                <li><strong>Sealed appropriately:</strong> Seal classes and methods when inheritance isn't needed</li>
+                <li><strong>Constructor chaining:</strong> Always call base constructors explicitly</li>
+                <li><strong>Liskov Substitution:</strong> Ensure derived classes honor base class contracts</li>
+            </ul>
+        </div>
+
+        <h2>🚀 Practical Applications</h2>
+        <p>Inheritance is essential for:</p>
+        <ul>
+            <li><strong>Framework development:</strong> Base classes for common functionality</li>
+            <li><strong>UI frameworks:</strong> Control hierarchies (Button inherits from Control)</li>
+            <li><strong>Game development:</strong> GameObject inheritance chains</li>
+            <li><strong>Business logic:</strong> Common entity base classes</li>
+            <li><strong>Exception handling:</strong> Custom exception classes</li>
+            <li><strong>Template method pattern:</strong> Algorithm skeletons with customizable steps</li>
+        </ul>
+
+        <h2>💡 Advanced Inheritance Features</h2>
+        <div class="code-block">
+            <div class="code-content"><span class="comment">// Method hiding with 'new' keyword</span>
+<span class="keyword">public class</span> <span class="type">Base</span>
+{
+    <span class="keyword">public virtual void</span> Method() => <span class="type">Console</span>.WriteLine(<span class="string">"Base"</span>);
+}
+
+<span class="keyword">public class</span> <span class="type">Derived</span> : <span class="type">Base</span>
+{
+    <span class="comment">// Method hiding (not overriding)</span>
+    <span class="keyword">public new void</span> Method() => <span class="type">Console</span>.WriteLine(<span class="string">"Derived"</span>);
+}
+
+<span class="comment">// Generic inheritance</span>
+<span class="keyword">public abstract class</span> <span class="type">Repository</span>&lt;<span class="type">T</span>&gt; <span class="keyword">where</span> T : <span class="keyword">class</span>
+{
+    <span class="keyword">public abstract void</span> Add(T entity);
+    <span class="keyword">public abstract</span> T GetById(<span class="type">int</span> id);
+}
+
+<span class="keyword">public class</span> <span class="type">UserRepository</span> : <span class="type">Repository</span>&lt;<span class="type">User</span>&gt;
+{
+    <span class="keyword">public override void</span> Add(<span class="type">User</span> user) { <span class="comment">/* Implementation */</span> }
+    <span class="keyword">public override</span> User GetById(<span class="type">int</span> id) { <span class="comment">/* Implementation */</span> }
+}</div>
+        </div>
+
+        <div class="navigation">
+            <a href="index.html" class="nav-link">← Back to Index</a>
+        </div>
+    </div>
+</body>
+</html>

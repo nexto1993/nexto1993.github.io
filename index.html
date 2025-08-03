@@ -1,1 +1,341 @@
-<h1>H</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C# OOP Projects - Index</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+        }
+        .project-list {
+            list-style: none;
+            padding: 0;
+        }
+        .project-item {
+            background-color: #f8f9fa;
+            margin: 10px 0;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            border-radius: 5px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .project-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .project-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        .project-description {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        .available-link {
+            color: #27ae60;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .available-link:hover {
+            text-decoration: underline;
+        }
+        .coming-soon {
+            color: #e74c3c;
+            font-style: italic;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ecf0f1;
+            color: #7f8c8d;
+        }
+        .search-container {
+            margin: 20px 0 30px 0;
+            text-align: center;
+        }
+        .search-box {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px 20px;
+            border: 2px solid #3498db;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+            background-color: #f8f9fa;
+        }
+        .search-box:focus {
+            border-color: #2980b9;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.3);
+            background-color: white;
+        }
+        .search-box::placeholder {
+            color: #7f8c8d;
+        }
+        .search-icon {
+            position: relative;
+            display: inline-block;
+        }
+        .search-icon::before {
+            content: "🔍";
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            font-size: 16px;
+        }
+        .no-results {
+            text-align: center;
+            color: #e74c3c;
+            font-style: italic;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #fdf2f2;
+            border-radius: 8px;
+            border-left: 4px solid #e74c3c;
+            display: none;
+        }
+        .search-stats {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>C# Object-Oriented Programming</h1>
+        <p style="text-align: center; color: #7f8c8d; margin-bottom: 30px;">
+            A collection of C# OOP concepts and examples
+        </p>
+        
+        <div class="search-container">
+            <div class="search-icon">
+                <input type="text" id="searchBox" class="search-box" placeholder="Search projects by title...">
+            </div>
+        </div>
+        
+        <div class="search-stats" id="searchStats"></div>
+        <div class="no-results" id="noResults">
+            No projects found matching your search. Try different keywords.
+        </div>
+        
+        <ul class="project-list">
+            <li class="project-item">
+                <div class="project-title">
+                    <a href="constructor.html" class="available-link">Constructor</a>
+                </div>
+                <div class="project-description">
+                    Learn about constructors and initialization in C# classes
+                    <strong style="color: #27ae60;">✓ Documentation Available</strong>
+                </div>
+            </li>
+            
+            <li class="project-item">
+                <div class="project-title">
+                    <a href="delegate.html" class="available-link">Delegate</a>
+                </div>
+                <div class="project-description">
+                    Understanding delegates and function pointers in C#
+                    <strong style="color: #27ae60;">✓ Documentation Available</strong>
+                </div>
+            </li>
+            
+            <li class="project-item">
+                <div class="project-title">
+                    <a href="events.html" class="available-link">Events</a>
+                </div>
+                <div class="project-description">
+                    Event handling and the observer pattern implementation
+                    <strong style="color: #27ae60;">✓ Documentation Available</strong>
+                </div>
+            </li>
+            
+            <li class="project-item">
+                <div class="project-title">
+                    <a href="field-constant.html" class="available-link">Field & Constant</a>
+                </div>
+                <div class="project-description">
+                    Working with fields, constants, and static members in C# classes
+                    <strong style="color: #27ae60;">✓ Documentation Available</strong>
+                </div>
+            </li>
+            
+            <li class="project-item">
+                <div class="project-title">
+                    <a href="indexers.html" class="available-link">Indexers</a>
+                </div>
+                <div class="project-description">
+                    Implementing indexers to access objects like arrays
+                    <strong style="color: #27ae60;">✓ Documentation Available</strong>
+                </div>
+            </li>
+            
+            <li class="project-item">
+                <div class="project-title">
+                    <a href="inheritance.html" class="available-link">Inheritance</a>
+                </div>
+                <div class="project-description">
+                    Class inheritance, base classes, and derived classes
+                    <strong style="color: #27ae60;">✓ Documentation Available</strong>
+                </div>
+            </li>
+            
+            <li class="project-item">
+                <div class="project-title">
+                    <a href="interfaces.html" class="available-link">Interfaces</a>
+                </div>
+                <div class="project-description">
+                    Contract-based programming with interfaces
+                    <strong style="color: #27ae60;">✓ Documentation Available</strong>
+                </div>
+            </li>
+            
+            <li class="project-item">
+                <div class="project-title">
+                    <a href="methods.html" class="available-link">Methods</a>
+                </div>
+                <div class="project-description">
+                    Method overloading, parameters, and return types
+                    <strong style="color: #27ae60;">✓ Documentation Available</strong>
+                </div>
+            </li>
+            
+            <li class="project-item">
+                <div class="project-title">
+                    <a href="operator-overloading.html" class="available-link">Operator Overloading</a>
+                </div>
+                <div class="project-description">
+                    Custom operator implementations for user-defined types
+                    <strong style="color: #27ae60;">✓ Documentation Available</strong>
+                </div>
+            </li>
+            
+            <li class="project-item">
+                <div class="project-title">
+                    <a href="properties.html" class="available-link">Properties</a>
+                </div>
+                <div class="project-description">
+                    Encapsulation with getters and setters using properties
+                    <strong style="color: #27ae60;">✓ Documentation Available</strong>
+                </div>
+            </li>
+        </ul>
+        
+        <div class="footer">
+            <p>Created on August 2, 2025 | C# OOP Learning Resources</p>
+        </div>
+    </div>
+
+    <script>
+        // Search functionality
+        const searchBox = document.getElementById('searchBox');
+        const projectItems = document.querySelectorAll('.project-item');
+        const noResults = document.getElementById('noResults');
+        const searchStats = document.getElementById('searchStats');
+        const totalProjects = projectItems.length;
+
+        // Update search stats
+        function updateSearchStats(visibleCount, searchTerm) {
+            if (searchTerm.trim() === '') {
+                searchStats.textContent = `Showing all ${totalProjects} projects`;
+            } else {
+                searchStats.textContent = `Found ${visibleCount} project${visibleCount !== 1 ? 's' : ''} matching "${searchTerm}"`;
+            }
+        }
+
+        // Filter projects based on search term
+        function filterProjects(searchTerm) {
+            const lowerSearchTerm = searchTerm.toLowerCase().trim();
+            let visibleCount = 0;
+
+            projectItems.forEach(item => {
+                const title = item.querySelector('.project-title').textContent.toLowerCase();
+                const description = item.querySelector('.project-description').textContent.toLowerCase();
+                
+                // Check if search term matches title or description
+                const matches = title.includes(lowerSearchTerm) || description.includes(lowerSearchTerm);
+                
+                if (matches || lowerSearchTerm === '') {
+                    item.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Show/hide no results message
+            if (visibleCount === 0 && lowerSearchTerm !== '') {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
+
+            // Update search stats
+            updateSearchStats(visibleCount, searchTerm);
+        }
+
+        // Add event listener for real-time search
+        searchBox.addEventListener('input', function() {
+            filterProjects(this.value);
+        });
+
+        // Add keyboard shortcuts
+        searchBox.addEventListener('keydown', function(e) {
+            // Clear search on Escape
+            if (e.key === 'Escape') {
+                this.value = '';
+                filterProjects('');
+                this.blur();
+            }
+        });
+
+        // Focus search box on Ctrl+F or Cmd+F (prevent default browser search)
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+                e.preventDefault();
+                searchBox.focus();
+                searchBox.select();
+            }
+        });
+
+        // Initialize search stats
+        updateSearchStats(totalProjects, '');
+
+        // Add subtle animation for search results
+        const style = document.createElement('style');
+        style.textContent = `
+            .project-item {
+                transition: opacity 0.3s ease, transform 0.3s ease;
+            }
+            .project-item[style*="none"] {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delegate - C# OOP</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            line-height: 1.6;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+        }
+        h2 {
+            color: #34495e;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #2c3e50;
+            margin-top: 25px;
+        }
+        .code-block {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            border: 1px solid #3c3c3c;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .code-block::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: linear-gradient(90deg, #ff5f56, #ffbd2e, #27ca3f);
+            border-radius: 8px 8px 0 0;
+        }
+        .code-block::after {
+            content: "●●●";
+            position: absolute;
+            top: 8px;
+            left: 12px;
+            color: #1e1e1e;
+            font-size: 8px;
+            letter-spacing: 2px;
+        }
+        .code-content {
+            margin-top: 30px;
+            white-space: pre-wrap;
+        }
+        .keyword {
+            color: #569cd6;
+            font-weight: 500;
+        }
+        .string {
+            color: #ce9178;
+        }
+        .comment {
+            color: #6a9955;
+            font-style: italic;
+        }
+        .type {
+            color: #4ec9b0;
+        }
+        .concept-box {
+            background-color: #e8f4fd;
+            border: 1px solid #bee3f8;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .concept-title {
+            color: #2b6cb0;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .navigation {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ecf0f1;
+        }
+        .nav-link {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: 2px solid #3498db;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        .nav-link:hover {
+            background-color: #3498db;
+            color: white;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .comparison-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .output-box {
+            background-color: #0d1117;
+            color: #f0f6fc;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            border-left: 4px solid #28a745;
+        }
+        .output-title {
+            color: #28a745;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .delegate-signature {
+            background-color: #f1f3f4;
+            padding: 10px;
+            border-radius: 4px;
+            border-left: 3px solid #3498db;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            margin: 10px 0;
+        }
+        .syntax-box {
+            background-color: #e8f5e8;
+            border: 1px solid #4caf50;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .syntax-title {
+            color: #2e7d32;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Delegates in C#</h1>
+        <p style="text-align: center; color: #7f8c8d; margin-bottom: 30px;">
+            Understanding delegates, function pointers, and multicast delegates in C#
+        </p>
+
+        <h2>📋 Code Analysis</h2>
+
+        <h3>Complete Program (Program.cs)</h3>
+        <div class="code-block">
+            <div class="code-content"><span class="keyword">namespace</span> <span class="type">Delegate</span>
+{
+    <span class="comment">// Delegate declaration - defines signature for math operations</span>
+    <span class="keyword">public delegate</span> <span class="type">int</span> MathOperation(<span class="type">int</span> x, <span class="type">int</span> y);
+
+    <span class="keyword">internal class</span> <span class="type">Program</span>
+    {
+        <span class="keyword">static void</span> Main(<span class="type">string</span>[] args)
+        {
+            <span class="type">Console</span>.WriteLine(<span class="string">"=== Simple Delegate Example ===\n"</span>);
+
+            <span class="comment">// Assign method to delegate</span>
+            <span class="type">MathOperation</span> addOperation = Add;
+
+            <span class="type">int</span> num1 = <span class="string">10</span>;
+            <span class="type">int</span> num2 = <span class="string">5</span>;
+
+            <span class="type">Console</span>.WriteLine($<span class="string">"Numbers: {num1} and {num2}"</span>);
+            <span class="type">Console</span>.WriteLine($<span class="string">"Addition using delegate: {addOperation(num1, num2)}"</span>);
+
+            <span class="type">Console</span>.WriteLine(<span class="string">"\n--- Reassigning the delegate ---"</span>);
+            <span class="comment">// Reassign delegate to different method</span>
+            addOperation = Subtract;
+            <span class="type">Console</span>.WriteLine($<span class="string">"Subtraction using reassigned delegate: {addOperation(num1, num2)}"</span>);
+
+            <span class="type">Console</span>.WriteLine(<span class="string">"\n--- Lambda Expression with Delegate ---"</span>);
+            <span class="comment">// Assign lambda expression to delegate</span>
+            <span class="type">MathOperation</span> divideOperation = (x, y) => {
+                <span class="type">int</span> result = x / y;
+                <span class="type">Console</span>.WriteLine($<span class="string">"  Lambda Divide: {x} / {y} = {result}"</span>);
+                <span class="keyword">return</span> result;
+            };
+            <span class="type">Console</span>.WriteLine($<span class="string">"Division using lambda delegate: {divideOperation(num1, num2)}"</span>);
+
+            <span class="comment">// Simple lambda expression</span>
+            <span class="type">MathOperation</span> multiplyLambda = (a, b) => a * b;
+            <span class="type">Console</span>.WriteLine($<span class="string">"Multiplication using simple lambda: {multiplyLambda(num1, num2)}"</span>);
+
+            <span class="type">Console</span>.WriteLine(<span class="string">"\n--- Multicast Delegate ---"</span>);
+            <span class="comment">// Multicast delegate - combines multiple methods</span>
+            <span class="type">MathOperation</span> multicastDelegate = Add;
+            multicastDelegate += Subtract;
+
+            <span class="type">Console</span>.WriteLine(<span class="string">"Calling multicast delegate (will execute all methods):"</span>);
+            <span class="type">int</span> result = multicastDelegate(num1, num2);
+            <span class="type">Console</span>.WriteLine($<span class="string">"Final result: {result}"</span>);
+        }
+
+        <span class="comment">// Method that matches delegate signature</span>
+        <span class="keyword">static</span> <span class="type">int</span> Add(<span class="type">int</span> a, <span class="type">int</span> b)
+        {
+            <span class="type">int</span> result = a + b;
+            <span class="type">Console</span>.WriteLine($<span class="string">"  Add: {a} + {b} = {result}"</span>);
+            <span class="keyword">return</span> result;
+        }
+
+        <span class="comment">// Another method that matches delegate signature</span>
+        <span class="keyword">static</span> <span class="type">int</span> Subtract(<span class="type">int</span> a, <span class="type">int</span> b)
+        {
+            <span class="type">int</span> result = a - b;
+            <span class="type">Console</span>.WriteLine($<span class="string">"  Subtract: {a} - {b} = {result}"</span>);
+            <span class="keyword">return</span> result;
+        }
+    }
+}</div>
+        </div>
+
+        <h2>📤 Expected Output</h2>
+        <div class="output-box">
+            <div class="output-title">Program Output:</div>
+=== Simple Delegate Example ===
+
+Numbers: 10 and 5
+  Add: 10 + 5 = 15
+Addition using delegate: 15
+
+--- Reassigning the delegate ---
+  Subtract: 10 - 5 = 5
+Subtraction using reassigned delegate: 5
+
+--- Lambda Expression with Delegate ---
+  Lambda Divide: 10 / 5 = 2
+Division using lambda delegate: 2
+Multiplication using simple lambda: 50
+
+--- Multicast Delegate ---
+Calling multicast delegate (will execute all methods):
+  Add: 10 + 5 = 15
+  Subtract: 10 - 5 = 5
+Final result: 5
+        </div>
+
+        <h2>🔑 Key Concepts Explained</h2>
+
+        <div class="concept-box">
+            <div class="concept-title">1. What are Delegates?</div>
+            <p><strong>Definition:</strong> Delegates are type-safe function pointers that can hold references to methods.</p>
+            <div class="delegate-signature">public delegate int MathOperation(int x, int y);</div>
+            <ul>
+                <li>Define a contract for methods (return type and parameters)</li>
+                <li>Can point to static or instance methods</li>
+                <li>Enable callback functionality and event handling</li>
+                <li>Support method chaining (multicast delegates)</li>
+            </ul>
+        </div>
+
+        <div class="concept-box">
+            <div class="concept-title">2. Delegate Assignment</div>
+            <p><strong>Definition:</strong> Delegates can be assigned to methods that match their signature.</p>
+            <div class="syntax-box">
+                <div class="syntax-title">Assignment Syntax:</div>
+                <div class="delegate-signature">
+                    MathOperation operation = Add;           // Method assignment<br>
+                    MathOperation operation = (x, y) => x + y; // Lambda assignment
+                </div>
+            </div>
+            <ul>
+                <li>Method must match delegate's return type and parameters</li>
+                <li>Can be reassigned to different methods at runtime</li>
+                <li>Supports both named methods and lambda expressions</li>
+            </ul>
+        </div>
+
+        <div class="concept-box">
+            <div class="concept-title">3. Lambda Expressions with Delegates</div>
+            <p><strong>Definition:</strong> Anonymous functions that can be assigned to delegates.</p>
+            <ul>
+                <li><strong>Block lambda:</strong> <code>(x, y) => { /* code */ return result; }</code></li>
+                <li><strong>Expression lambda:</strong> <code>(x, y) => x + y</code></li>
+                <li>Provide concise syntax for simple operations</li>
+                <li>Can capture local variables (closures)</li>
+            </ul>
+        </div>
+
+        <div class="concept-box">
+            <div class="concept-title">4. Multicast Delegates</div>
+            <p><strong>Definition:</strong> Delegates that can hold references to multiple methods.</p>
+            <div class="delegate-signature">
+                multicastDelegate = Add;<br>
+                multicastDelegate += Subtract; // Add another method
+            </div>
+            <ul>
+                <li>Use <code>+=</code> to add methods to the delegate</li>
+                <li>Use <code>-=</code> to remove methods from the delegate</li>
+                <li>All methods execute when delegate is invoked</li>
+                <li>Return value is from the last method executed</li>
+            </ul>
+        </div>
+
+        <div class="concept-box">
+            <div class="concept-title">5. Delegate Benefits</div>
+            <p><strong>Key Advantages:</strong> Why use delegates in C# applications.</p>
+            <ul>
+                <li><strong>Flexibility:</strong> Change behavior at runtime</li>
+                <li><strong>Decoupling:</strong> Separate method calls from implementations</li>
+                <li><strong>Events:</strong> Foundation for event-driven programming</li>
+                <li><strong>Callbacks:</strong> Pass methods as parameters</li>
+                <li><strong>Functional programming:</strong> Enable higher-order functions</li>
+            </ul>
+        </div>
+
+        <h2> Program Execution Flow</h2>
+        <div class="highlight">
+            <h4>Step-by-Step Execution:</h4>
+            <ol>
+                <li><strong>Simple Assignment:</strong> <code>addOperation = Add</code> - Delegate points to Add method</li>
+                <li><strong>Method Call:</strong> <code>addOperation(10, 5)</code> - Executes Add method, returns 15</li>
+                <li><strong>Reassignment:</strong> <code>addOperation = Subtract</code> - Now points to Subtract method</li>
+                <li><strong>Lambda Assignment:</strong> Delegate gets anonymous function for division</li>
+                <li><strong>Multicast:</strong> <code>+=</code> operator adds Subtract to Add, both execute</li>
+                <li><strong>Final Result:</strong> Returns result from last method (Subtract = 5)</li>
+            </ol>
+        </div>
+
+        <h2>💻 Advanced Delegate Examples</h2>
+        <div class="code-block">
+            <div class="code-content"><span class="comment">// Generic delegate</span>
+<span class="keyword">public delegate</span> T Calculator&lt;T&gt;(T x, T y);
+
+<span class="comment">// Func and Action delegates (built-in)</span>
+<span class="type">Func</span>&lt;<span class="type">int</span>, <span class="type">int</span>, <span class="type">int</span>&gt; funcDelegate = (x, y) => x * y;
+<span class="type">Action</span>&lt;<span class="type">string</span>&gt; actionDelegate = message => <span class="type">Console</span>.WriteLine(message);
+
+<span class="comment">// Predicate delegate</span>
+<span class="type">Predicate</span>&lt;<span class="type">int</span>&gt; isEven = x => x % <span class="string">2</span> == <span class="string">0</span>;
+
+<span class="comment">// Using delegates as parameters</span>
+<span class="keyword">static void</span> ProcessNumbers(<span class="type">int</span>[] numbers, <span class="type">Func</span>&lt;<span class="type">int</span>, <span class="type">bool</span>&gt; filter)
+{
+    <span class="keyword">foreach</span> (<span class="type">int</span> num <span class="keyword">in</span> numbers.Where(filter))
+    {
+        <span class="type">Console</span>.WriteLine(num);
+    }
+}</div>
+        </div>
+
+        <h2>💡 Key Learning Points</h2>
+        <div class="highlight">
+            <h4>Important Delegate Concepts:</h4>
+            <ul>
+                <li><strong>Type safety:</strong> Compile-time checking of method signatures</li>
+                <li><strong>Runtime flexibility:</strong> Change behavior without modifying code</li>
+                <li><strong>Multicast capability:</strong> Execute multiple methods with one call</li>
+                <li><strong>Lambda support:</strong> Concise syntax for simple operations</li>
+                <li><strong>Built-in delegates:</strong> Func, Action, Predicate for common patterns</li>
+                <li><strong>Event foundation:</strong> Events are built on top of delegates</li>
+            </ul>
+        </div>
+
+        <h2>🔧 Best Practices</h2>
+        <p>When working with delegates:</p>
+        <ul>
+            <li><strong>Use built-in delegates:</strong> Prefer Func, Action, Predicate over custom delegates</li>
+            <li><strong>Null checking:</strong> Always check if delegate is null before invoking</li>
+            <li><strong>Exception handling:</strong> Be aware that exceptions in one method stop the chain</li>
+            <li><strong>Performance:</strong> Delegates have small overhead compared to direct method calls</li>
+            <li><strong>Memory leaks:</strong> Be careful with event subscriptions and cleanup</li>
+        </ul>
+
+        <h2>🚀 Practical Applications</h2>
+        <p>Delegates are essential for:</p>
+        <ul>
+            <li><strong>Event handling:</strong> UI events, notifications, observers</li>
+            <li><strong>Callback methods:</strong> Asynchronous operations, completion handlers</li>
+            <li><strong>Strategy pattern:</strong> Pluggable algorithms and behaviors</li>
+            <li><strong>Functional programming:</strong> Higher-order functions, LINQ</li>
+            <li><strong>Template methods:</strong> Customizable behavior in frameworks</li>
+            <li><strong>Chain of responsibility:</strong> Processing pipelines</li>
+        </ul>
+
+        <div class="navigation">
+            <a href="index.html" class="nav-link">← Back to Index</a>
+        </div>
+    </div>
+</body>
+</html>

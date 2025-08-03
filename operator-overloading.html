@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operator Overloading - C# OOP</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            line-height: 1.6;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+        }
+        h2 {
+            color: #34495e;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #2c3e50;
+            margin-top: 25px;
+        }
+        .code-block {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            border: 1px solid #3c3c3c;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .code-block::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: linear-gradient(90deg, #ff5f56, #ffbd2e, #27ca3f);
+            border-radius: 8px 8px 0 0;
+        }
+        .code-block::after {
+            content: "●●●";
+            position: absolute;
+            top: 8px;
+            left: 12px;
+            color: #1e1e1e;
+            font-size: 8px;
+            letter-spacing: 2px;
+        }
+        .code-content {
+            margin-top: 30px;
+            white-space: pre-wrap;
+        }
+        .keyword {
+            color: #569cd6;
+            font-weight: 500;
+        }
+        .string {
+            color: #ce9178;
+        }
+        .comment {
+            color: #6a9955;
+            font-style: italic;
+        }
+        .type {
+            color: #4ec9b0;
+        }
+        .concept-box {
+            background-color: #e8f4fd;
+            border: 1px solid #bee3f8;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .concept-title {
+            color: #2b6cb0;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .navigation {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ecf0f1;
+        }
+        .nav-link {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: 2px solid #3498db;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        .nav-link:hover {
+            background-color: #3498db;
+            color: white;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .comparison-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .output-box {
+            background-color: #0d1117;
+            color: #f0f6fc;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            border-left: 4px solid #28a745;
+        }
+        .output-title {
+            color: #28a745;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .operator-signature {
+            background-color: #f1f3f4;
+            padding: 10px;
+            border-radius: 4px;
+            border-left: 3px solid #ff9800;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            margin: 10px 0;
+        }
+        .syntax-box {
+            background-color: #e8f5e8;
+            border: 1px solid #4caf50;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .syntax-title {
+            color: #2e7d32;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .warning-box {
+            background-color: #fff3e0;
+            border: 1px solid #ffcc02;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            color: #e65100;
+        }
+        .success-box {
+            background-color: #e8f5e8;
+            border: 1px solid #c8e6c9;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            color: #2e7d32;
+        }
+        .operator-category {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Operator Overloading in C#</h1>
+        <p style="text-align: center; color: #7f8c8d; margin-bottom: 30px;">
+            Understanding custom operator implementations for user-defined types
+        </p>
+
+        <h2>📋 Code Analysis</h2>
+
+        <h3>Money Class (Money.cs)</h3>
+        <div class="code-block">
+            <div class="code-content"><span class="keyword">namespace</span> <span class="type">OperatorOverloading</span>
+{
+    <span class="keyword">public class</span> <span class="type">Money</span>
+    {
+        <span class="comment">// Private field for encapsulation</span>
+        <span class="keyword">private</span> <span class="type">decimal</span> _amount;
+        
+        <span class="comment">// Read-only property</span>
+        <span class="keyword">public</span> <span class="type">decimal</span> Amount => _amount;
+
+        <span class="comment">// Constructor</span>
+        <span class="keyword">public</span> Money(<span class="type">decimal</span> value)
+        {
+            _amount = value;
+        }
+
+        <span class="comment">// Operator overloading for addition</span>
+        <span class="keyword">public static</span> <span class="type">Money</span> <span class="keyword">operator</span> +(<span class="type">Money</span> money1, <span class="type">Money</span> money2)
+        {
+            <span class="keyword">var</span> value = money1.Amount + money2.Amount;
+            <span class="keyword">return new</span> Money(value);
+        }
+    }
+}</div>
+        </div>
+
+        <h3>Program Class (Program.cs)</h3>
+        <div class="code-block">
+            <div class="code-content"><span class="keyword">namespace</span> <span class="type">OperatorOverloading</span>
+{
+    <span class="keyword">internal class</span> <span class="type">Program</span>
+    {
+        <span class="keyword">static void</span> Main(<span class="type">string</span>[] args)
+        {
+            <span class="comment">// Create Money instances</span>
+            <span class="type">Money</span> money = <span class="keyword">new</span> Money(<span class="string">10</span>);
+            <span class="type">Money</span> money1 = <span class="keyword">new</span> Money(<span class="string">20</span>);
+            
+            <span class="comment">// Use overloaded + operator</span>
+            <span class="keyword">var</span> value = money + money1;
+            
+            <span class="comment">// Display result</span>
+            <span class="type">Console</span>.WriteLine(value.Amount);  <span class="comment">// Output: 30</span>
+        }
+    }
+}</div>
+        </div>
+
+        <h2>📤 Expected Output</h2>
+        <div class="output-box">
+            <div class="output-title">Program Output:</div>
+            30
+        </div>
+
+        <h2>🔑 Key Concepts Explained</h2>
+
+        <div class="concept-box">
+            <div class="concept-title">1. What is Operator Overloading?</div>
+            <p><strong>Definition:</strong> Operator overloading allows you to define custom behavior for operators when used with user-defined types.</p>
+            <div class="operator-signature">public static ReturnType operator +(Type1 left, Type2 right)</div>
+            <ul>
+                <li><strong>Static methods:</strong> Operator overloads must be static</li>
+                <li><strong>Public access:</strong> Must be accessible to calling code</li>
+                <li><strong>Return type:</strong> Can return any type, not necessarily the same as operands</li>
+                <li><strong>Parameters:</strong> Binary operators take two parameters, unary take one</li>
+                <li><strong>At least one parameter:</strong> Must be of the containing type</li>
+            </ul>
+        </div>
+
+        <div class="concept-box">
+            <div class="concept-title">2. Operator Overloading Syntax</div>
+            <div class="syntax-box">
+                <div class="syntax-title">General Syntax Pattern:</div>
+                <div class="operator-signature">
+                    public static [ReturnType] operator [Operator]([Parameters])<br>
+                    {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;// Implementation<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return result;<br>
+                    }
+                </div>
+            </div>
+            <ul>
+                <li><strong>Keyword:</strong> Use <code>operator</code> keyword</li>
+                <li><strong>Static:</strong> All operator overloads are static methods</li>
+                <li><strong>Public:</strong> Must be publicly accessible</li>
+                <li><strong>Parameters:</strong> At least one parameter must be of the defining type</li>
+            </ul>
+        </div>
+
+        <div class="concept-box">
+            <div class="concept-title">3. Types of Operators</div>
+            <p><strong>Categories:</strong> Different operator types have different requirements and behaviors.</p>
+            
+            <div class="operator-category">
+                <strong>Unary Operators:</strong> +, -, !, ~, ++, --, true, false
+            </div>
+            <div class="operator-category">
+                <strong>Binary Operators:</strong> +, -, *, /, %, &, |, ^, <<, >>
+            </div>
+            <div class="operator-category">
+                <strong>Comparison Operators:</strong> ==, !=, <, >, <=, >= (must be pairs)
+            </div>
+            <div class="operator-category">
+                <strong>Conversion Operators:</strong> implicit, explicit
+            </div>
+        </div>
+
+        <h2>📊 Overloadable vs Non-Overloadable Operators</h2>
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Overloadable</th>
+                    <th>Non-Overloadable</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Arithmetic</strong></td>
+                    <td>+, -, *, /, %</td>
+                    <td>=, +=, -=, *=, /=</td>
+                    <td>Compound assignment derived from basic</td>
+                </tr>
+                <tr>
+                    <td><strong>Logical</strong></td>
+                    <td>&, |, ^, !, ~</td>
+                    <td>&&, ||</td>
+                    <td>Short-circuit operators cannot be overloaded</td>
+                </tr>
+                <tr>
+                    <td><strong>Comparison</strong></td>
+                    <td>==, !=, <, >, <=, >=</td>
+                    <td>N/A</td>
+                    <td>Must overload in pairs (==,!=) and (<,>,<=,>=)</td>
+                </tr>
+                <tr>
+                    <td><strong>Increment/Decrement</strong></td>
+                    <td>++, --</td>
+                    <td>N/A</td>
+                    <td>Prefix and postfix use same overload</td>
+                </tr>
+                <tr>
+                    <td><strong>Other</strong></td>
+                    <td>[], (), implicit, explicit</td>
+                    <td>?:, ??, ., ->, new, typeof, is, as</td>
+                    <td>Special syntax and language constructs</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🔧 Enhanced Money Class Example</h2>
+        <div class="code-block">
+            <div class="code-content"><span class="keyword">public class</span> <span class="type">Money</span>
+{
+    <span class="keyword">private</span> <span class="type">decimal</span> _amount;
+    <span class="keyword">public</span> <span class="type">decimal</span> Amount => _amount;
+    <span class="keyword">public</span> <span class="type">string</span> Currency { <span class="keyword">get</span>; }
+
+    <span class="keyword">public</span> Money(<span class="type">decimal</span> amount, <span class="type">string</span> currency = <span class="string">"USD"</span>)
+    {
+        _amount = amount;
+        Currency = currency;
+    }
+
+    <span class="comment">// Arithmetic operators</span>
+    <span class="keyword">public static</span> <span class="type">Money</span> <span class="keyword">operator</span> +(<span class="type">Money</span> left, <span class="type">Money</span> right)
+    {
+        <span class="keyword">if</span> (left.Currency != right.Currency)
+            <span class="keyword">throw new</span> <span class="type">InvalidOperationException</span>(<span class="string">"Cannot add different currencies"</span>);
+        <span class="keyword">return new</span> Money(left.Amount + right.Amount, left.Currency);
+    }
+
+    <span class="keyword">public static</span> <span class="type">Money</span> <span class="keyword">operator</span> -(<span class="type">Money</span> left, <span class="type">Money</span> right)
+    {
+        <span class="keyword">if</span> (left.Currency != right.Currency)
+            <span class="keyword">throw new</span> <span class="type">InvalidOperationException</span>(<span class="string">"Cannot subtract different currencies"</span>);
+        <span class="keyword">return new</span> Money(left.Amount - right.Amount, left.Currency);
+    }
+
+    <span class="comment">// Unary operators</span>
+    <span class="keyword">public static</span> <span class="type">Money</span> <span class="keyword">operator</span> -(<span class="type">Money</span> money)
+    {
+        <span class="keyword">return new</span> Money(-money.Amount, money.Currency);
+    }
+
+    <span class="keyword">public static</span> <span class="type">Money</span> <span class="keyword">operator</span> ++(<span class="type">Money</span> money)
+    {
+        <span class="keyword">return new</span> Money(money.Amount + <span class="string">1</span>, money.Currency);
+    }
+
+    <span class="comment">// Comparison operators (must be pairs)</span>
+    <span class="keyword">public static</span> <span class="type">bool</span> <span class="keyword">operator</span> ==(<span class="type">Money</span> left, <span class="type">Money</span> right)
+    {
+        <span class="keyword">return</span> left?.Amount == right?.Amount && left?.Currency == right?.Currency;
+    }
+
+    <span class="keyword">public static</span> <span class="type">bool</span> <span class="keyword">operator</span> !=(<span class="type">Money</span> left, <span class="type">Money</span> right)
+    {
+        <span class="keyword">return</span> !(left == right);
+    }
+
+    <span class="keyword">public static</span> <span class="type">bool</span> <span class="keyword">operator</span> >(<span class="type">Money</span> left, <span class="type">Money</span> right)
+    {
+        <span class="keyword">if</span> (left.Currency != right.Currency)
+            <span class="keyword">throw new</span> <span class="type">InvalidOperationException</span>(<span class="string">"Cannot compare different currencies"</span>);
+        <span class="keyword">return</span> left.Amount > right.Amount;
+    }
+
+    <span class="keyword">public static</span> <span class="type">bool</span> <span class="keyword">operator</span> <(<span class="type">Money</span> left, <span class="type">Money</span> right)
+    {
+        <span class="keyword">return</span> !(left > right) && left != right;
+    }
+
+    <span class="comment">// Conversion operators</span>
+    <span class="keyword">public static implicit operator</span> <span class="type">decimal</span>(<span class="type">Money</span> money)
+    {
+        <span class="keyword">return</span> money.Amount;
+    }
+
+    <span class="keyword">public static explicit operator</span> <span class="type">Money</span>(<span class="type">decimal</span> amount)
+    {
+        <span class="keyword">return new</span> Money(amount);
+    }
+
+    <span class="comment">// Override Equals and GetHashCode when overloading == and !=</span>
+    <span class="keyword">public override</span> <span class="type">bool</span> Equals(<span class="type">object</span> obj)
+    {
+        <span class="keyword">return</span> obj <span class="keyword">is</span> Money money && <span class="keyword">this</span> == money;
+    }
+
+    <span class="keyword">public override</span> <span class="type">int</span> GetHashCode()
+    {
+        <span class="keyword">return</span> <span class="type">HashCode</span>.Combine(Amount, Currency);
+    }
+
+    <span class="keyword">public override</span> <span class="type">string</span> ToString()
+    {
+        <span class="keyword">return</span> $<span class="string">"{Amount:C} {Currency}"</span>;
+    }
+}</div>
+        </div>
+
+        <h2>💻 Usage Examples</h2>
+        <div class="code-block">
+            <div class="code-content"><span class="comment">// Arithmetic operations</span>
+<span class="keyword">var</span> money1 = <span class="keyword">new</span> Money(<span class="string">100</span>);
+<span class="keyword">var</span> money2 = <span class="keyword">new</span> Money(<span class="string">50</span>);
+
+<span class="keyword">var</span> sum = money1 + money2;        <span class="comment">// 150</span>
+<span class="keyword">var</span> difference = money1 - money2; <span class="comment">// 50</span>
+<span class="keyword">var</span> negative = -money1;          <span class="comment">// -100</span>
+<span class="keyword">var</span> incremented = ++money1;      <span class="comment">// 101</span>
+
+<span class="comment">// Comparison operations</span>
+<span class="keyword">bool</span> isEqual = money1 == money2;    <span class="comment">// false</span>
+<span class="keyword">bool</span> isGreater = money1 > money2;  <span class="comment">// true</span>
+
+<span class="comment">// Conversion operations</span>
+<span class="type">decimal</span> amount = money1;             <span class="comment">// Implicit conversion to decimal</span>
+<span class="keyword">var</span> newMoney = (<span class="type">Money</span>)<span class="string">75.50m</span>;    <span class="comment">// Explicit conversion from decimal</span>
+
+<span class="comment">// Chaining operations</span>
+<span class="keyword">var</span> result = money1 + money2 - <span class="keyword">new</span> Money(<span class="string">25</span>);  <span class="comment">// 125</span></div>
+        </div>
+
+        <h2>⚠️ Important Considerations</h2>
+        <div class="warning-box">
+            <h4>Operator Overloading Rules and Best Practices:</h4>
+            <ul>
+                <li><strong>Equality operators:</strong> When overloading == and !=, also override Equals() and GetHashCode()</li>
+                <li><strong>Comparison pairs:</strong> Overload comparison operators in logical pairs (<, >, <=, >=)</li>
+                <li><strong>Consistency:</strong> Ensure operators behave consistently with mathematical expectations</li>
+                <li><strong>Null safety:</strong> Handle null values appropriately in operator implementations</li>
+                <li><strong>Performance:</strong> Consider performance implications of operator overloading</li>
+                <li><strong>Immutability:</strong> Consider making types immutable when overloading operators</li>
+            </ul>
+        </div>
+
+        <h2>🎯 Conversion Operators</h2>
+        <div class="concept-box">
+            <div class="concept-title">Implicit vs Explicit Conversions</div>
+            <div class="success-box">
+                <strong>Implicit Conversion (automatic):</strong>
+                <ul>
+                    <li>Safe conversions that don't lose data</li>
+                    <li>Compiler applies automatically</li>
+                    <li>Example: int to decimal, Money to decimal</li>
+                </ul>
+            </div>
+            <div class="warning-box">
+                <strong>Explicit Conversion (manual cast required):</strong>
+                <ul>
+                    <li>Potentially unsafe conversions</li>
+                    <li>Requires explicit cast syntax</li>
+                    <li>Example: decimal to Money, double to int</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2>🔧 Best Practices</h2>
+        <div class="highlight">
+            <h4>Operator Overloading Guidelines:</h4>
+            <ul>
+                <li><strong>Natural behavior:</strong> Make operators behave as users would naturally expect</li>
+                <li><strong>Mathematical consistency:</strong> Follow mathematical rules (commutative, associative where applicable)</li>
+                <li><strong>Complete sets:</strong> Overload related operators together (==, !=) and (<, >, <=, >=)</li>
+                <li><strong>Immutable types:</strong> Prefer immutable types for operator overloading</li>
+                <li><strong>Type safety:</strong> Use strong typing to prevent invalid operations</li>
+                <li><strong>Exception handling:</strong> Throw appropriate exceptions for invalid operations</li>
+                <li><strong>Documentation:</strong> Document expected behavior and any limitations</li>
+            </ul>
+        </div>
+
+        <h2>🚀 Practical Applications</h2>
+        <p>Operator overloading is valuable for:</p>
+        <ul>
+            <li><strong>Mathematical types:</strong> Complex numbers, matrices, vectors</li>
+            <li><strong>Business objects:</strong> Money, measurements, quantities</li>
+            <li><strong>Data structures:</strong> Custom collections with set operations</li>
+            <li><strong>Domain-specific types:</strong> Coordinates, colors, dates/times</li>
+            <li><strong>Fluent APIs:</strong> Creating readable domain-specific languages</li>
+            <li><strong>Framework development:</strong> LINQ operators, expression trees</li>
+        </ul>
+
+        <h2>💡 Advanced Patterns</h2>
+        <div class="code-block">
+            <div class="code-content"><span class="comment">// Generic operator overloading</span>
+<span class="keyword">public struct</span> <span class="type">Quantity</span>&lt;<span class="type">T</span>&gt; <span class="keyword">where</span> T : <span class="keyword">struct</span>, <span class="type">IComparable</span>&lt;<span class="type">T</span>&gt;
+{
+    <span class="keyword">public</span> T Value { <span class="keyword">get</span>; }
+    <span class="keyword">public</span> <span class="type">string</span> Unit { <span class="keyword">get</span>; }
+
+    <span class="keyword">public static</span> <span class="type">Quantity</span>&lt;<span class="type">T</span>&gt; <span class="keyword">operator</span> +(<span class="type">Quantity</span>&lt;<span class="type">T</span>&gt; left, <span class="type">Quantity</span>&lt;<span class="type">T</span>&gt; right)
+    {
+        <span class="keyword">if</span> (left.Unit != right.Unit)
+            <span class="keyword">throw new</span> <span class="type">InvalidOperationException</span>(<span class="string">"Cannot add different units"</span>);
+        
+        <span class="comment">// This would require more complex generic math in real implementation</span>
+        <span class="keyword">return new</span> <span class="type">Quantity</span>&lt;<span class="type">T</span>&gt;(left.Value + right.Value, left.Unit);
+    }
+}
+
+<span class="comment">// Fluent API with operator overloading</span>
+<span class="keyword">public class</span> <span class="type">QueryBuilder</span>
+{
+    <span class="keyword">public static</span> <span class="type">QueryBuilder</span> <span class="keyword">operator</span> &(<span class="type">QueryBuilder</span> left, <span class="type">QueryBuilder</span> right)
+    {
+        <span class="comment">// Combine queries with AND</span>
+        <span class="keyword">return</span> left.And(right);
+    }
+
+    <span class="keyword">public static</span> <span class="type">QueryBuilder</span> <span class="keyword">operator</span> |(<span class="type">QueryBuilder</span> left, <span class="type">QueryBuilder</span> right)
+    {
+        <span class="comment">// Combine queries with OR</span>
+        <span class="keyword">return</span> left.Or(right);
+    }
+}</div>
+        </div>
+
+        <div class="navigation">
+            <a href="index.html" class="nav-link">← Back to Index</a>
+        </div>
+    </div>
+</body>
+</html>

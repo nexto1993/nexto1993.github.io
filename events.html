@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - C# OOP</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            line-height: 1.6;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+        }
+        h2 {
+            color: #34495e;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #2c3e50;
+            margin-top: 25px;
+        }
+        .code-block {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            border: 1px solid #3c3c3c;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .code-block::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: linear-gradient(90deg, #ff5f56, #ffbd2e, #27ca3f);
+            border-radius: 8px 8px 0 0;
+        }
+        .code-block::after {
+            content: "●●●";
+            position: absolute;
+            top: 8px;
+            left: 12px;
+            color: #1e1e1e;
+            font-size: 8px;
+            letter-spacing: 2px;
+        }
+        .code-content {
+            margin-top: 30px;
+            white-space: pre-wrap;
+        }
+        .keyword {
+            color: #569cd6;
+            font-weight: 500;
+        }
+        .string {
+            color: #ce9178;
+        }
+        .comment {
+            color: #6a9955;
+            font-style: italic;
+        }
+        .type {
+            color: #4ec9b0;
+        }
+        .concept-box {
+            background-color: #e8f4fd;
+            border: 1px solid #bee3f8;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .concept-title {
+            color: #2b6cb0;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .navigation {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ecf0f1;
+        }
+        .nav-link {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: 2px solid #3498db;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        .nav-link:hover {
+            background-color: #3498db;
+            color: white;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .comparison-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .output-box {
+            background-color: #0d1117;
+            color: #f0f6fc;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            border-left: 4px solid #28a745;
+        }
+        .output-title {
+            color: #28a745;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .event-signature {
+            background-color: #f1f3f4;
+            padding: 10px;
+            border-radius: 4px;
+            border-left: 3px solid #3498db;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            margin: 10px 0;
+        }
+        .syntax-box {
+            background-color: #e8f5e8;
+            border: 1px solid #4caf50;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .syntax-title {
+            color: #2e7d32;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .color-demo {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 5px 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+        .green-text { background-color: #d4edda; color: #155724; }
+        .red-text { background-color: #f8d7da; color: #721c24; }
+        .gray-text { background-color: #f8f9fa; color: #6c757d; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Events in C#</h1>
+        <p style="text-align: center; color: #7f8c8d; margin-bottom: 30px;">
+            Understanding events, event handling, and the observer pattern in C#
+        </p>
+
+        <h2>📋 Code Analysis</h2>
+
+        <h3>Stock Class (Stock.cs)</h3>
+        <div class="code-block">
+            <div class="code-content"><span class="keyword">namespace</span> <span class="type">events</span>
+{
+    <span class="keyword">public class</span> <span class="type">Stock</span>
+    {
+        <span class="comment">// Private fields for encapsulation</span>
+        <span class="keyword">private</span> <span class="type">string</span> _name;
+        <span class="keyword">private</span> <span class="type">decimal</span> _price;
+        
+        <span class="comment">// Public properties for controlled access</span>
+        <span class="keyword">public</span> <span class="type">string</span> Name => _name;
+        <span class="keyword">public</span> <span class="type">decimal</span> Price { <span class="keyword">set</span> => _price = value; <span class="keyword">get</span> => <span class="keyword">this</span>._price; }
+
+        <span class="comment">// Event declaration - based on the delegate</span>
+        <span class="keyword">public event</span> <span class="type">StockePriceChangeHandler</span> OnPriceChanged;
+
+        <span class="comment">// Constructor to initialize stock name</span>
+        <span class="keyword">public</span> Stock(<span class="type">string</span> name)
+        {
+            _name = name;
+        }
+
+        <span class="comment">// Method that triggers the event</span>
+        <span class="keyword">public void</span> ChangeStockPriceBy(<span class="type">decimal</span> percent)
+        {
+            <span class="type">decimal</span> oldPrice = _price;
+            _price += <span class="type">Math</span>.Round(_price * percent, <span class="string">2</span>);
+            
+            <span class="comment">// Check if anyone is subscribed to the event</span>
+            <span class="keyword">if</span> (OnPriceChanged != <span class="keyword">null</span>)
+            {
+                <span class="comment">// Fire the event</span>
+                OnPriceChanged(<span class="keyword">this</span>, oldPrice);
+            }
+        }
+    }
+}</div>
+        </div>
+
+        <h3>Program Class (Program.cs)</h3>
+        <div class="code-block">
+            <div class="code-content"><span class="keyword">namespace</span> <span class="type">events</span>
+{
+    <span class="comment">// Delegate declaration for the event</span>
+    <span class="keyword">public delegate void</span> <span class="type">StockePriceChangeHandler</span>(<span class="type">Stock</span> stock, <span class="type">decimal</span> oldPrice);
+    
+    <span class="keyword">internal class</span> <span class="type">Program</span>
+    {
+        <span class="keyword">static void</span> Main(<span class="type">string</span>[] args)
+        {
+            <span class="comment">// Create a stock instance</span>
+            <span class="keyword">var</span> stock = <span class="keyword">new</span> Stock(<span class="string">"Tasnee"</span>);
+            stock.Price = <span class="string">100</span>;
+            
+            <span class="comment">// Subscribe to the event</span>
+            stock.OnPriceChanged += Stock_OnPriceChanged;
+            
+            <span class="comment">// Trigger price changes</span>
+            stock.ChangeStockPriceBy(<span class="string">0.05m</span>);  <span class="comment">// +5% increase</span>
+            stock.ChangeStockPriceBy(<span class="string">-0.02m</span>); <span class="comment">// -2% decrease</span>
+            stock.ChangeStockPriceBy(<span class="string">0.00m</span>);  <span class="comment">// No change</span>
+            
+            <span class="comment">// Unsubscribe from the event</span>
+            stock.OnPriceChanged -= Stock_OnPriceChanged;
+        }
+
+        <span class="comment">// Event handler method</span>
+        <span class="keyword">private static void</span> Stock_OnPriceChanged(<span class="type">Stock</span> stock, <span class="type">decimal</span> oldPrice)
+        {
+            <span class="comment">// Change console color based on price movement</span>
+            <span class="keyword">if</span> (stock.Price > oldPrice)
+            {
+                <span class="type">Console</span>.ForegroundColor = <span class="type">ConsoleColor</span>.Green;
+            }
+            <span class="keyword">else if</span> (stock.Price < oldPrice)
+            {
+                <span class="type">Console</span>.ForegroundColor = <span class="type">ConsoleColor</span>.Red;
+            }
+            <span class="keyword">else</span>
+            {
+                <span class="type">Console</span>.ForegroundColor = <span class="type">ConsoleColor</span>.Gray;
+            }
+            
+            <span class="comment">// Display the stock information</span>
+            <span class="type">Console</span>.WriteLine($<span class="string">"{stock.Name} : {stock.Price}"</span>);
+        }
+    }
+}</div>
+        </div>
+
+        <h2>📤 Expected Output</h2>
+        <div class="output-box">
+            <div class="output-title">Program Output (with colors):</div>
+            <div class="color-demo green-text">Tasnee : 105.00</div>
+            <div class="color-demo red-text">Tasnee : 102.90</div>
+            <div class="color-demo gray-text">Tasnee : 102.90</div>
+        </div>
+
+        <h2>🔑 Key Concepts Explained</h2>
+
+        <div class="concept-box">
+            <div class="concept-title">1. What are Events?</div>
+            <p><strong>Definition:</strong> Events are a special kind of multicast delegate that provide controlled access and notifications.</p>
+            <div class="event-signature">public event StockePriceChangeHandler OnPriceChanged;</div>
+            <ul>
+                <li>Built on top of delegates with additional restrictions</li>
+                <li>Enable the observer pattern for loose coupling</li>
+                <li>Only the declaring class can raise (fire) events</li>
+                <li>External classes can only subscribe (+= or -=), not assign directly</li>
+            </ul>
+        </div>
+
+        <div class="concept-box">
+            <div class="concept-title">2. Event Declaration and Usage</div>
+            <div class="syntax-box">
+                <div class="syntax-title">Event Declaration Pattern:</div>
+                <div class="event-signature">
+                    // 1. Declare delegate<br>
+                    public delegate void EventHandler(object sender, EventArgs e);<br><br>
+                    // 2. Declare event based on delegate<br>
+                    public event EventHandler SomeEvent;
+                </div>
+            </div>
+            <ul>
+                <li><strong>Delegate first:</strong> Define the signature for event handlers</li>
+                <li><strong>Event declaration:</strong> Use <code>event</code> keyword with delegate type</li>
+                <li><strong>Event firing:</strong> Check for null and invoke the event</li>
+                <li><strong>Subscription:</strong> Use += to add handlers, -= to remove</li>
+            </ul>
+        </div>
+
+        <div class="concept-box">
+            <div class="concept-title">3. Observer Pattern Implementation</div>
+            <p><strong>Definition:</strong> Events implement the observer pattern where subjects notify observers of changes.</p>
+            <ul>
+                <li><strong>Subject (Publisher):</strong> Stock class that raises events</li>
+                <li><strong>Observer (Subscriber):</strong> Methods that handle the events</li>
+                <li><strong>Notification:</strong> Automatic when price changes occur</li>
+                <li><strong>Decoupling:</strong> Stock doesn't know who's listening</li>
+            </ul>
+        </div>
+
+        <div class="concept-box">
+            <div class="concept-title">4. Event Handler Pattern</div>
+            <p><strong>Best Practice:</strong> Event handlers follow a consistent pattern for parameters.</p>
+            <div class="event-signature">
+                void EventHandler(object sender, EventArgs e)<br>
+                void StockePriceChangeHandler(Stock stock, decimal oldPrice)
+            </div>
+            <ul>
+                <li><strong>Sender object:</strong> Reference to the object that raised the event</li>
+                <li><strong>Event arguments:</strong> Data specific to the event</li>
+                <li><strong>Void return:</strong> Event handlers typically don't return values</li>
+                <li><strong>Static or instance:</strong> Handlers can be either type</li>
+            </ul>
+        </div>
+
+        <div class="concept-box">
+            <div class="concept-title">5. Event Safety and Encapsulation</div>
+            <p><strong>Security Features:</strong> Events provide controlled access compared to raw delegates.</p>
+            <ul>
+                <li><strong>Access control:</strong> Only declaring class can raise events</li>
+                <li><strong>Interface restriction:</strong> External classes can't assign (=), only subscribe (+=/-=)</li>
+                <li><strong>Null safety:</strong> Always check for null before firing</li>
+                <li><strong>Exception isolation:</strong> One handler's exception doesn't stop others</li>
+            </ul>
+        </div>
+
+        <h2>🔄 Program Execution Flow</h2>
+        <div class="highlight">
+            <h4>Step-by-Step Event Flow:</h4>
+            <ol>
+                <li><strong>Setup:</strong> Create Stock("Tasnee") and set initial price to 100</li>
+                <li><strong>Subscribe:</strong> <code>stock.OnPriceChanged += Stock_OnPriceChanged</code></li>
+                <li><strong>Price Change 1:</strong> +5% → 105.00 → Event fired → Green color output</li>
+                <li><strong>Price Change 2:</strong> -2% → 102.90 → Event fired → Red color output</li>
+                <li><strong>Price Change 3:</strong> 0% → 102.90 → Event fired → Gray color output</li>
+                <li><strong>Unsubscribe:</strong> <code>stock.OnPriceChanged -= Stock_OnPriceChanged</code></li>
+            </ol>
+        </div>
+
+        <h2>📊 Events vs Delegates</h2>
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Delegate</th>
+                    <th>Event</th>
+                    <th>Benefit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Access Control</strong></td>
+                    <td>Full access</td>
+                    <td>Restricted access</td>
+                    <td>Better encapsulation</td>
+                </tr>
+                <tr>
+                    <td><strong>Assignment</strong></td>
+                    <td>= allowed</td>
+                    <td>= not allowed</td>
+                    <td>Prevents accidental replacement</td>
+                </tr>
+                <tr>
+                    <td><strong>Subscription</strong></td>
+                    <td>+= and -= allowed</td>
+                    <td>+= and -= allowed</td>
+                    <td>Safe subscription model</td>
+                </tr>
+                <tr>
+                    <td><strong>Raising/Firing</strong></td>
+                    <td>Any class can invoke</td>
+                    <td>Only declaring class</td>
+                    <td>Controlled event firing</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>💻 Advanced Event Patterns</h2>
+        <div class="code-block">
+            <div class="code-content"><span class="comment">// Custom EventArgs class</span>
+<span class="keyword">public class</span> <span class="type">StockPriceChangedEventArgs</span> : <span class="type">EventArgs</span>
+{
+    <span class="keyword">public</span> <span class="type">decimal</span> OldPrice { <span class="keyword">get</span>; }
+    <span class="keyword">public</span> <span class="type">decimal</span> NewPrice { <span class="keyword">get</span>; }
+    <span class="keyword">public</span> <span class="type">decimal</span> ChangePercent { <span class="keyword">get</span>; }
+    
+    <span class="keyword">public</span> StockPriceChangedEventArgs(<span class="type">decimal</span> oldPrice, <span class="type">decimal</span> newPrice)
+    {
+        OldPrice = oldPrice;
+        NewPrice = newPrice;
+        ChangePercent = oldPrice != <span class="string">0</span> ? (newPrice - oldPrice) / oldPrice : <span class="string">0</span>;
+    }
+}
+
+<span class="comment">// Using EventHandler&lt;T&gt; generic delegate</span>
+<span class="keyword">public event</span> <span class="type">EventHandler</span>&lt;<span class="type">StockPriceChangedEventArgs</span>&gt; PriceChanged;
+
+<span class="comment">// Improved event firing with null-conditional operator</span>
+<span class="keyword">protected virtual void</span> OnPriceChanged(<span class="type">decimal</span> oldPrice)
+{
+    PriceChanged?.Invoke(<span class="keyword">this</span>, <span class="keyword">new</span> StockPriceChangedEventArgs(oldPrice, _price));
+}</div>
+        </div>
+
+        <h2>💡 Key Learning Points</h2>
+        <div class="highlight">
+            <h4>Important Event Concepts:</h4>
+            <ul>
+                <li><strong>Observer pattern:</strong> Events enable loose coupling between publishers and subscribers</li>
+                <li><strong>Encapsulation:</strong> Events provide controlled access compared to raw delegates</li>
+                <li><strong>Event safety:</strong> Always check for null before firing events</li>
+                <li><strong>Subscription model:</strong> Use += to subscribe, -= to unsubscribe</li>
+                <li><strong>Standard pattern:</strong> Follow EventHandler&lt;T&gt; pattern for consistency</li>
+                <li><strong>Memory management:</strong> Unsubscribe from events to prevent memory leaks</li>
+            </ul>
+        </div>
+
+        <h2>🔧 Best Practices</h2>
+        <p>When working with events:</p>
+        <ul>
+            <li><strong>Use EventHandler&lt;T&gt;:</strong> Prefer generic EventHandler over custom delegates</li>
+            <li><strong>Null checking:</strong> Use null-conditional operator (?.) when firing events</li>
+            <li><strong>Protected virtual methods:</strong> Create OnEventName methods for derived classes</li>
+            <li><strong>Exception handling:</strong> Consider try-catch when firing events with multiple subscribers</li>
+            <li><strong>Weak event pattern:</strong> Use for long-lived publishers with short-lived subscribers</li>
+            <li><strong>Unsubscribe:</strong> Always unsubscribe to prevent memory leaks</li>
+        </ul>
+
+        <h2>🚀 Practical Applications</h2>
+        <p>Events are essential for:</p>
+        <ul>
+            <li><strong>User interfaces:</strong> Button clicks, form submissions, window events</li>
+            <li><strong>Real-time systems:</strong> Stock prices, sensor readings, game state changes</li>
+            <li><strong>Notifications:</strong> Email alerts, system notifications, status updates</li>
+            <li><strong>Model-View patterns:</strong> MVC, MVVM architecture implementations</li>
+            <li><strong>Plugin systems:</strong> Extensible applications with event-driven plugins</li>
+            <li><strong>Workflow systems:</strong> Process completion, state transitions</li>
+        </ul>
+
+        <div class="navigation">
+            <a href="index.html" class="nav-link">← Back to Index</a>
+        </div>
+    </div>
+</body>
+</html>
